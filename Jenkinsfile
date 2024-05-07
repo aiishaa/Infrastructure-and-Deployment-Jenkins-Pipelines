@@ -12,7 +12,7 @@ pipeline {
                             secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
                         ]
                     ]) {
-                        dir('terraform') {
+                        dir('Terraform') {
                             sh "terraform init"
                             sh "terraform apply --auto-approve"
                             EC2_PUBLIC_IP = sh (
