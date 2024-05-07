@@ -4,7 +4,7 @@
   vars:
     ssh_public_key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
   vars_files:
-    - name: vars_vault.yml
+    - vars_vault.yml
   tasks:
     - name: update packages
       apt:
@@ -81,12 +81,9 @@
     
     - name: Download Jenkins Agent JAR
       get_url:
-        url: "http://{{ jenkins_server_url }}/jnlpJars/agent.jar"
+        url: "http://{{ jenkins_server_ip }}/jnlpJars/agent.jar"
         dest: /home/jenkins/agent.jar
         mode: 0755
 
-   - name: Start Jenkins Agent
-      command: "java -jar /home/jenkins/agent.jar -jnlpUrl http://{{ jenkins_server_url }}
-        - name 'private-ec2-instance' -secret {{ my-secret }} -workDir '/home/jenkins'"
-        async: 3600
-        poll: 0
+    - name: Start Jenkins Agent
+      command: "java -jar /home/jenkins/agent.jar -jnlpUrl http://{{ jenkins_server_ip }} -name 'private-ec2-instance' -secret {{ jenkins_server_secret }} -workDir '/home/jenkins'"
