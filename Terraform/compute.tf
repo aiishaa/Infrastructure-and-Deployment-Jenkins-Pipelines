@@ -24,7 +24,7 @@ resource "aws_key_pair" "my_key" {
 }
 
 resource "local_file" "private_key" {
-  filename = "./my_key.pem"
+  filename = "my_key.pem"
   content  = tls_private_key.my_key_pair.private_key_pem
 }
 
