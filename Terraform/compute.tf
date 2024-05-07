@@ -69,7 +69,7 @@ resource "aws_security_group" "backend_SG" {
 resource "aws_instance" "bastion_host" {
     ami = data.aws_ami.ubuntu.id
     instance_type = var.ec2_instance_type
-    subnet_id =module.my-vpc.private_subnet_1.id
+    subnet_id =module.my-vpc.public_subnet_1.id
     associate_public_ip_address = true
     security_groups = [aws_security_group.bastion_SG.id]
     key_name = aws_key_pair.my_key.id
