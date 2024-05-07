@@ -18,7 +18,7 @@ pipeline {
                         dir('Terraform') {
                             sh "terraform init"
                             sh 'terraform workspace select ${environment}'
-                            sh "terraform apply --auto-approve"
+                            sh "terraform apply -var-file ${environment}_variables.tfvars --auto-approve"
                             // EC2_PUBLIC_IP = sh (
                                 // script: "terraform output ec2_public_ip",
                                 // returnStdout: true
