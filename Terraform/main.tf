@@ -1,3 +1,8 @@
 terraform {
-  # Ignore specific files
+  required_providers {
+    local = {
+      source = "hashicorp/local"
+    }
+  }
 }
+
