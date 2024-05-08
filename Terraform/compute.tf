@@ -26,13 +26,11 @@ resource "aws_key_pair" "my_key" {
 resource "local_file" "private_key_pem" {
  filename = "my_key.pem"
  content = tls_private_key.my_key_pair.private_key_pem
-}
+ provisioner "file" {
+    source      = "my_key.pem"
+    destination = "~/.ssh/id_rsa" 
 
-resource "file" "private_key" {
-  source  = "my_key.pem"
-  destination = "~/.ssh/id_rsa"
-  permissions = "0600"
-  force_copy = true
+  }
 }
 
 resource "aws_security_group" "bastion_SG" {
