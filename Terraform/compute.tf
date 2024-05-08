@@ -24,15 +24,16 @@ resource "aws_key_pair" "my_key" {
 }
 
 resource "local_file" "private_key_pem" {
- filename = "my_key.pem"
- content = tls_private_key.my_key_pair.private_key_pem
+  filename = "my_key.pem"
+  content  = tls_private_key.my_key_pair.private_key_pem
 }
 
 resource "null_resource" "copy_file_locally" {
+  depends_on = [local_file.private_key_pem]
+
   provisioner "local-exec" {
     command = "cp my_key.pem ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa"
   }
-depends_on = local_file.private_key_pem.id
 }
 
 resource "aws_security_group" "bastion_SG" {
