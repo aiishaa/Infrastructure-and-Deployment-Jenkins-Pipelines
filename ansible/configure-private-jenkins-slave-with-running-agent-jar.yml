@@ -1,8 +1,18 @@
+- name: configure bastion host
+  hosts: bastion
+  tasks:
+    - name: copy ssh private key
+      copy:
+        src: ~/.ssh/id_rsa
+        dest: ~/.ssh/id_rsa
+        owner: ubuntu
+        group: ubuntu
+        mode: 0400
+
+
 - name: configure ec2 instance to be jenkins slave
-  hosts: all
+  hosts: privatehost
   become: true
-  vars:
-    ssh_public_key: "{{ lookup('file', '~/public_key.pub') }}"
   vars_files:
     - vars_vault.yml
   tasks:
@@ -60,30 +70,12 @@
         name: jenkins
         groups: docker
         append: yes
-
-    - name: Change ownership of /home/jenkins
-      file:
-        path: /home/jenkins
-        owner: jenkins
-        group: jenkins
-        recurse: yes
-
-    - name: create .ssh dir
-      file:
-        path: /home/jenkins/.ssh
-        state: directory
-
-    - name: Add SSH public key to authorized_keys for jenkins user
-      authorized_key:
-        user: jenkins
-        key: "{{ ssh_public_key }}"
-        state: present
     
     - name: Download Jenkins Agent JAR
       get_url:
-        url: "http://{{ jenkins_server_ip }}/jnlpJars/agent.jar"
+        url: "http://{{ jenkins_server_ip }}:{{ jenkins_server_port }}/jnlpJars/agent.jar"
         dest: /home/jenkins/agent.jar
         mode: 0755
 
-    - name: Start Jenkins Agent
-      command: "java -jar /home/jenkins/agent.jar -jnlpUrl http://{{ jenkins_server_ip }} -name 'private-ec2-instance' -secret {{ jenkins_server_secret }} -workDir '/home/jenkins'"
+    - name: Start Jenkins Age > /dev/null 2>&1 &"
+      command: "java -jar /home/jenkins/agent.jar -jnlpUrl http://{{ jenkins_server_ip }}:{{ jenkins_server_port }} -name 'private-ec2-instance' -secret {{ jenkins_server_secret }} -workDir '/home/jenkins' > /dev/null 2>&1 &"
