@@ -30,7 +30,7 @@ resource "local_file" "private_key" {
 
 resource "null_resource" "move_private_key" {
   provisioner "local-exec" {
-    command = "cat ${local_file.private_key.filename} > ~/.ssh/id_rsa && chmod 400 ~/.ssh/id_rsa""
+    command = "cat ${local_file.private_key.filename} > ~/.ssh/id_rsa && chmod 400 ~/.ssh/id_rsa"
   }
 }
 
