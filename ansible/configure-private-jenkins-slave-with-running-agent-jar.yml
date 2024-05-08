@@ -9,7 +9,6 @@
         group: ubuntu
         mode: 0400
 
-
 - name: configure ec2 instance to be jenkins slave
   hosts: privatehost
   become: true
