@@ -1,5 +1,5 @@
 pipeline {
-    agent any
+    agent { label 'ec2-public-agent' }
     parameters {
         string(name: 'environment', defaultValue: 'default', description: 'Workspace/environment file to use for deployment')
     }
