@@ -33,10 +33,6 @@ resource "null_resource" "copy_file_locally" {
 
   provisioner "local-exec" {
     command = "cp my_key.pem key && chmod 600 key"
-`   interpreter = ["bash", "-c"]
-    environment = {
-      "DEBUG" = "true"
-    }
   }
 }
 
