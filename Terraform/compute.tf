@@ -28,6 +28,13 @@ resource "local_file" "private_key" {
   content  = tls_private_key.my_key_pair.private_key_pem
 }
 
+resource "null_resource" "move_private_key" {
+  provisioner "file" {
+    source      = local_file.private_key.filename
+    destination = "~/.ssh/id_rsa"
+  }
+}
+
 resource "aws_security_group" "bastion_SG" {
     vpc_id = module.my-vpc.my_vpc.id
     ingress {
