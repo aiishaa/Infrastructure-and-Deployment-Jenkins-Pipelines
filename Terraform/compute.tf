@@ -120,6 +120,8 @@ resource "aws_instance" "application_host" {
         command = "echo privatehost ansible_host=${self.private_ip} >> ../ansible/inventory"
     }
 
+    depends_on = [aws_instance.bastion_host]
+
     tags = {
         name = "${var.common_resource_name}-app-host"
     }
