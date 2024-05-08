@@ -30,6 +30,7 @@ pipeline {
                     dir('ansible') {
                         sh 'chmod +x ./ansible_ssh_configuration.sh'
                         sh './ansible_ssh_configuration.sh'
+                        sh 'ls'
                         withCredentials([string(credentialsId: 'vault-password', variable: 'VAULT_PASSWORD')]) {
                             def extraVars = [ "vault_password": "@${VAULT_PASSWORD}" ]
                             ansiblePlaybook(
