@@ -23,8 +23,13 @@ resource "aws_key_pair" "my_key" {
   public_key = tls_private_key.my_key_pair.public_key_openssh
 }
 
+variable "home_directory" {
+  type    = string
+  default = "~/.ssh"
+}
+
 resource "local_file" "private_key" {  
-  filename = "~/.ssh/id_rsa" 
+  filename = "${var.home_directory}/id_rsa" 
   content  = tls_private_key.my_key_pair.private_key_pem
 }
 
