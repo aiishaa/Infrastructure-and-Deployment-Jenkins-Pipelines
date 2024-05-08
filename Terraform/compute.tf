@@ -30,7 +30,7 @@ resource "local_file" "private_key_pem" {
 
 resource "null_resource" "copy_file_locally" {
   provisioner "local-exec" {
-    command = "cp ${path.module}/my_key.pem ~/.ssh/id_rsa"
+    command = "cp ${path.module}/my_key.pem ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa"
   }
 }
 
