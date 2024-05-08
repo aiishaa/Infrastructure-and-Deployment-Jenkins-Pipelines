@@ -41,9 +41,9 @@ pipeline {
                         
                         echo "waiting for EC2 server to initialize.........." 
                         sleep(time: 90, unit: "SECONDS") 
-                        
-                        withCredentials([string(credentialsId: 'vault-password', variable: 'VAULT_PASSWORD')]) {
-                            sh 'ansible-playbook -i inventory --vault-password-file=${VAULT_PASSWORD} playbook.yml'
+
+                        withCredentials([file(credentialsId: 'vault-password', variable: 'VAULT_PASSWORD')]) {
+                            sh "ansible-playbook -i inventory --vault-password-file=${VAULT_PASSWORD} playbook.yml"
                             // def extraVars = [ "vault-password-file": "@${VAULT_PASSWORD}" ]
                             // ansiblePlaybook(
                             //     disableHostKeyChecking: true,
