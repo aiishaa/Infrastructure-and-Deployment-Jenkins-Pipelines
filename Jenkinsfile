@@ -16,7 +16,7 @@ pipeline {
                         ]
                     ]) {
                         dir('Terraform') {
-                            sh "terraform init"
+                            sh "terraform init -upgrade"
                             sh "terraform workspace select ${environment}"
                             sh "terraform apply -var-file ${environment}_variables.tfvars --auto-approve"
                             EC2_PUBLIC_IP = sh (
