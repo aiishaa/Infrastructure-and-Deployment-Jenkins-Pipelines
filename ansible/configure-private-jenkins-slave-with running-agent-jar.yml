@@ -2,7 +2,7 @@
   hosts: all
   become: true
   vars:
-    ssh_public_key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
+    ssh_public_key: "{{ lookup('file', '~/public_key.pub') }}"
   vars_files:
     - vars_vault.yml
   tasks:
