@@ -1,5 +1,5 @@
 - name: Configure jenkins slave to run terraform tasks on
-  hosts: apublichost
+  hosts: publichost
   become: true
   vars:
     ssh_public_key: "{{ lookup('file', '~/public_key.pub') }}"
