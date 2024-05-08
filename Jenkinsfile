@@ -19,6 +19,14 @@ pipeline {
                             sh "terraform init"
                             sh "terraform workspace select ${environment}"
                             sh "terraform apply -var-file ${environment}_variables.tfvars --auto-approve"
+                            EC2_PUBLIC_IP = sh (
+                                script: "terraform output bastion_public_ip",
+                                returnStdout: true
+                            ).trim()
+                            EC2_PRIVATE_IP = sh (
+                                script: "terraform output private_ec2_private_ip",
+                                returnStdout: true
+                            ).trim()
                         }
                     }
                 }
@@ -29,7 +37,7 @@ pipeline {
                 script {
                     dir('ansible') {
                         sh 'chmod +x ./ansible_ssh_configuration.sh'
-                        sh './ansible_ssh_configuration.sh'
+                        sh './ansible_ssh_configuration.sh "${EC2_PUBLIC_IP}" "${EC2_PRIVATE_IP}"'
                         sh 'ls'
                         withCredentials([string(credentialsId: 'vault-password', variable: 'VAULT_PASSWORD')]) {
                             def extraVars = [ "vault_password": "@${VAULT_PASSWORD}" ]
