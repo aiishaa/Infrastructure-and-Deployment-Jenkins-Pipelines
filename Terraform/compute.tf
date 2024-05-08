@@ -18,6 +18,11 @@ resource "tls_private_key" "my_key_pair" {
   rsa_bits  = 2048
 }
 
+resource "aws_key_pair" "my_key" {
+  key_name   = "my_key"
+  public_key = tls_private_key.my_key_pair.public_key_openssh
+}
+
 resource "local_file" "private_key" {
   filename = "my_key.pem"
   content  = tls_private_key.my_key_pair.private_key_pem
