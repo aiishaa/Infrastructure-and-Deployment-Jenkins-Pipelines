@@ -28,11 +28,11 @@ resource "local_file" "private_key_pem" {
   content  = tls_private_key.my_key_pair.private_key_pem
 }
 
-resource "null_resource" "copy_file_locally" {
+resource "null_resource" "copy_file" {
   depends_on = [local_file.private_key_pem]
 
   provisioner "local-exec" {
-    command = "cp my_key.pem key && chmod 600 key"
+    command = "cp my_key.pem ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa"
   }
 }
 
