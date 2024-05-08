@@ -37,7 +37,7 @@ pipeline {
                 script {
                     dir('ansible') {
                         sh 'chmod +x ./ansible_ssh_configuration.sh'
-                        sh './ansible_ssh_configuration.sh "${EC2_PUBLIC_IP}" "${EC2_PRIVATE_IP}"'
+                        sh "./ansible_ssh_configuration.sh '${EC2_PUBLIC_IP}' '${EC2_PRIVATE_IP}'"
                         sh 'ls'
                         withCredentials([string(credentialsId: 'vault-password', variable: 'VAULT_PASSWORD')]) {
                             def extraVars = [ "vault_password": "@${VAULT_PASSWORD}" ]
