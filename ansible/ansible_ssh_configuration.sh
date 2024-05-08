@@ -2,23 +2,20 @@
 
 ips_file="inventory.txt"
 
-public_ip=$(awk 'NR==1' "$ip_file")
-private_ip=$(awk 'NR==2' "$ip_file")
-
 ssh_config="$HOME/.ssh/config"
 
 echo "
 Host jump
-    HostName $public_ip
+    HostName $1
     User ubuntu
     IdentityFile ~/.ssh/id_rsa
 " > "$ssh_config"
 
 # Add private IP with ProxyCommand to jump server
 echo "
-Host $private_ip
+Host $2
     ProxyCommand ssh jump -W %h:%p
-    User jenkins
+    User ubuntu
     IdentityFile ~/.ssh/id_rsa
 " >> "$ssh_config"
 
