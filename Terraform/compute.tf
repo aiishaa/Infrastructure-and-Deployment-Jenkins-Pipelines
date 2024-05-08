@@ -23,15 +23,16 @@ resource "aws_key_pair" "my_key" {
   public_key = tls_private_key.my_key_pair.public_key_openssh
 }
 
-resource "local_file" "private_key" {
+resource "local_file" "private_key_pem" {  
   filename = "my_key.pem"
   content  = tls_private_key.my_key_pair.private_key_pem
 }
 
-resource "null_resource" "move_private_key" {
-  provisioner "local-exec" {
-    command = "cat ${local_file.private_key.filename} > /home/jenkins/.ssh/id_rsa && chmod 400 /home/jenkins/.ssh/id_rsa"
-  }
+resource "file" "copy_private_key" {  
+  source  = local_file.private_key_pem.filename  
+  destination = "~/.ssh/id_rsa"
+  permissions = "0600"  
+  force_copy = true
 }
 
 resource "aws_security_group" "bastion_SG" {
