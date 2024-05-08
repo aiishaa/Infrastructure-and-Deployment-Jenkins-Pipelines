@@ -29,12 +29,20 @@ pipeline {
                 }
             }
         }
-        stage(" execute Ansible") {
-           steps {
-                dir('ansible'){
-                    ansiblePlaybook disableHostKeyChecking: true, installation: 'Ansible', inventory: 'inventory', playbook: 'playbook.yml'
+        stage("Execute Ansible") {
+            steps {
+                dir('ansible') {
+                    withCredentials([string(credentialsId: 'vault-password', variable: 'VAULT_PASSWORD')]) {
+                        ansiblePlaybook(
+                            disableHostKeyChecking: true,
+                            installation: 'Ansible',
+                            inventory: 'inventory',
+                            playbook: 'playbook.yml',
+                            extraVars: [vault_password: ${VAULT_PASSWORD}]
+                        )
+                    }
                 }
-           }
-        }    
+            }
+        }
     }
 }
