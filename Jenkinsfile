@@ -43,15 +43,15 @@ pipeline {
                         sleep(time: 90, unit: "SECONDS") 
 
                         withCredentials([file(credentialsId: 'vault-password', variable: 'VAULT_PASSWORD')]) {
-                            //sh "ansible-playbook -i inventory --vault-password-file=${VAULT_PASSWORD} playbook.yml"
-                            def extraVars = [ "vault-password-file": "${VAULT_PASSWORD}" ]
-                            ansiblePlaybook(
-                                disableHostKeyChecking: true,
-                                installation: 'Ansible',
-                                inventory: 'inventory',
-                                playbook: 'playbook.yml',
-                                extraVars: extraVars
-                            )
+                            sh "ansible-playbook -i inventory --vault-password-file=${VAULT_PASSWORD} -ssh-common-args='-o StrictHostKeyChecking=no' playbook.yml"
+                            // def extraVars = [ "vault-password-file": "${VAULT_PASSWORD}" ]
+                            // ansiblePlaybook(
+                            //     disableHostKeyChecking: true,
+                            //     installation: 'Ansible',
+                            //     inventory: 'inventory',
+                            //     playbook: 'playbook.yml',
+                            //     extraVars: extraVars
+                            // )
                         }
                     }
                 }
