@@ -1,0 +1,96 @@
+- name: Configure jenkins slave to run terraform tasks on
+  hosts: all
+  become: true
+  vars:
+    ssh_public_key: "{{ lookup('file', '~/public_key.pub') }}"
+  tasks:
+    - name: update packages
+      apt:
+        name: "*"
+        state: latest
+        
+    - name: Add Docker GPG apt Key
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+
+    - name: Add Docker Repository
+      apt_repository:
+        repo: deb https://download.docker.com/linux/ubuntu focal stable
+        state: present
+
+    - name: Add HashiCorp GPG key
+      apt_key:
+        url: https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x91A6E7F85D05C65630BEF18951852D87348FFC4C
+        state: present
+    
+    - name: Add HashiCorp repository
+      apt_repository:
+        repo: "deb [arch=amd64] https://apt.releases.hashicorp.com {{ ansible_distribution_release }} main"
+        state: present
+
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+        
+    - name: install docker-ce and terraform
+      apt:
+        name: "{{item}}"
+        state: latest
+      loop:
+        - docker-ce
+        - terraform
+        
+    - name: install openjdk 
+      apt:
+        name: "{{item}}"
+        state: present
+      loop:
+        - openjdk-11-jdk
+        
+    - name: make sure that ssh and ssh are running
+      service:
+        name: "{{item}}"
+        state: started
+        enabled: true
+      loop:
+        - ssh
+        - docker
+    
+    - name: Create jenkins group
+      group:
+        name: jenkins
+        gid: 1200
+
+    - name: Create jenkins user
+      user:
+        name: jenkins
+        uid: 1200
+        group: jenkins
+        shell: /bin/bash
+        home: /home/jenkins
+        
+    - name: Add jenkins user to docker group
+      user:
+        name: jenkins
+        groups: docker
+        append: yes
+
+    - name: Change ownership of /home/jenkins
+      file:
+        path: /home/jenkins
+        owner: jenkins
+        group: jenkins
+        recurse: yes
+
+    - name: create .ssh dir
+      file:
+        path: /home/jenkins/.ssh
+        state: directory
+
+    - name: Add SSH public key to authorized_keys for jenkins user
+      authorized_key:
+        user: jenkins
+        key: "{{ ssh_public_key }}"
+        state: present
+        
