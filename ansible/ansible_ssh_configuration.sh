@@ -7,7 +7,6 @@ private_ip=$(awk 'NR==2' "$ip_file")
 
 ssh_config="$HOME/.ssh/config"
 
-# Add or update the SSH config
 echo "
 Host jump
     HostName $public_ip
