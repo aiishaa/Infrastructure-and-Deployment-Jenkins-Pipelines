@@ -43,7 +43,7 @@ pipeline {
                         sleep(time: 90, unit: "SECONDS") 
                         
                         withCredentials([string(credentialsId: 'vault-password', variable: 'VAULT_PASSWORD')]) {
-                            def extraVars = [ "vault_password": "@${VAULT_PASSWORD}" ]
+                            def extraVars = [ "vault-password-file": "@${VAULT_PASSWORD}" ]
                             ansiblePlaybook(
                                 disableHostKeyChecking: true,
                                 installation: 'Ansible',
