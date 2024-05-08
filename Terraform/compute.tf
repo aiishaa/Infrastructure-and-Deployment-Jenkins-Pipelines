@@ -95,7 +95,7 @@ resource "aws_instance" "bastion_host" {
     EOF
 
     provisioner "local-exec" {
-        command = "echo ${self.public_ip} > ../ansible/inventory"
+        command = "echo bastion ansible_host=${self.public_ip} > ../ansible/inventory"
     }
 
     tags = {
@@ -111,7 +111,7 @@ resource "aws_instance" "application_host" {
     key_name = aws_key_pair.my_key.id
 
     provisioner "local-exec" {
-        command = "echo ${self.private_ip} >> ../ansible/inventory"
+        command = "echo privatehost ansible_host=${self.private_ip} >> ../ansible/inventory"
     }
 
     tags = {
