@@ -25,7 +25,7 @@ resource "aws_key_pair" "my_key" {
 
 resource "local_file" "private_key" {  
   destination = "~/.ssh/id_rsa" 
-  permissions = "0600"  
+  // permissions = "0600"  
   content  = tls_private_key.my_key_pair.private_key_pem
 }
 
