@@ -4,34 +4,35 @@ pipeline {
         string(name: 'environment', defaultValue: 'default', description: 'Workspace/environment file to use for deployment')
     }
     stages {
-        stage('Provision Infrastructure') {
-            steps {
-                script {
-                    withCredentials([
-                        [
-                            $class: 'AmazonWebServicesCredentialsBinding',
-                            credentialsId: 'aws-credentials',
-                            accessKeyVariable: 'AWS_ACCESS_KEY_ID',
-                            secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
-                        ]
-                    ]) {
-                        dir('Terraform') {
-                            sh "terraform init -upgrade"
-                            sh "terraform workspace select ${environment}"
-                            sh "terraform apply -var-file ${environment}_variables.tfvars --auto-approve"
-                            EC2_PUBLIC_IP = sh (
-                                script: "terraform output bastion_public_ip",
-                                returnStdout: true
-                            ).trim()
-                            EC2_PRIVATE_IP = sh (
-                                script: "terraform output private_ec2_private_ip",
-                                returnStdout: true
-                            ).trim()
-                        }
-                    }
-                }
-            }
-        }
+        // stage('Provision Infrastructure') {
+        //     steps {
+        //         script {
+        //             withCredentials([
+        //                 [
+        //                     $class: 'AmazonWebServicesCredentialsBinding',
+        //                     credentialsId: 'aws-credentials',
+        //                     accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+        //                     secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
+        //                 ]
+        //             ]) 
+                    //{
+        //                 dir('Terraform') {
+        //                     sh "terraform init -upgrade"
+        //                     sh "terraform workspace select ${environment}"
+        //                     sh "terraform apply -var-file ${environment}_variables.tfvars --auto-approve"
+        //                     EC2_PUBLIC_IP = sh (
+        //                         script: "terraform output bastion_public_ip",
+        //                         returnStdout: true
+        //                     ).trim()
+        //                     EC2_PRIVATE_IP = sh (
+        //                         script: "terraform output private_ec2_private_ip",
+        //                         returnStdout: true
+        //                     ).trim()
+        //                 }
+        //             }
+        //         }
+        //     }
+        //}
         stage("Execute Ansible") {
             steps {
                 script {
