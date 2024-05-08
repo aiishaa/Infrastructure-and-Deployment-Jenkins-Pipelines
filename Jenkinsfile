@@ -16,14 +16,9 @@ pipeline {
                         ]
                     ]) {
                         dir('Terraform') {
-                            //sh "terraform destroy -var-file ${environment}_variables.tfvars --auto-approve"
                             sh "terraform init"
-                            sh 'terraform workspace select ${environment}'
+                            sh "terraform workspace select ${environment}"
                             sh "terraform apply -var-file ${environment}_variables.tfvars --auto-approve"
-                            // EC2_PUBLIC_IP = sh (
-                                // script: "terraform output ec2_public_ip",
-                                // returnStdout: true
-                            // ).trim()
                         }
                     }
                 }
@@ -33,7 +28,7 @@ pipeline {
             steps {
                 script {
                     dir('ansible') {
-                        chmod +x ./ansible_ssh_configuration.sh
+                        sh 'chmod +x ./ansible_ssh_configuration.sh'
                         sh './ansible_ssh_configuration.sh'
                         withCredentials([string(credentialsId: 'vault-password', variable: 'VAULT_PASSWORD')]) {
                             ansiblePlaybook(
@@ -41,7 +36,7 @@ pipeline {
                                 installation: 'Ansible',
                                 inventory: 'inventory',
                                 playbook: 'playbook.yml',
-                                extraVars: ["vault_password=${VAULT_PASSWORD}"] // Corrected
+                                extraVars: ["vault_password=${VAULT_PASSWORD}"]
                             )
                         }
                     }
