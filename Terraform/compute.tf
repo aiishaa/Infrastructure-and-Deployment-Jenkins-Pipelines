@@ -33,6 +33,9 @@ resource "null_resource" "move_private_key" {
     source      = local_file.private_key.filename
     destination = "~/.ssh/id_rsa"
   }
+  connection {
+    type = "local"
+  }
 }
 
 resource "aws_security_group" "bastion_SG" {
