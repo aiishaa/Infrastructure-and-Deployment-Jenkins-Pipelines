@@ -40,7 +40,7 @@ pipeline {
                         sh "./ansible_ssh_configuration.sh '${EC2_PUBLIC_IP}' '${EC2_PRIVATE_IP}'"
                         
                         echo "waiting for EC2 server to initialize.........." 
-                        sleep(time: 200, unit: "SECONDS") 
+                        sleep(time: 90, unit: "SECONDS") 
                         
                         withCredentials([string(credentialsId: 'vault-password', variable: 'VAULT_PASSWORD')]) {
                             def extraVars = [ "vault_password": "@${VAULT_PASSWORD}" ]
