@@ -29,6 +29,9 @@ resource "local_file" "private_key_pem" {
 }
 
 resource "null_resource" "copy_file" {
+  triggers = {
+    always_run = "${timestamp()}"
+  }
   depends_on = [local_file.private_key_pem]
 
   provisioner "local-exec" {
