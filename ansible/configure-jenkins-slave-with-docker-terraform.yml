@@ -1,5 +1,5 @@
 - name: Configure jenkins slave to run terraform tasks on
-  hosts: all
+  hosts: apublichost
   become: true
   vars:
     ssh_public_key: "{{ lookup('file', '~/public_key.pub') }}"
@@ -19,14 +19,14 @@
         repo: deb https://download.docker.com/linux/ubuntu focal stable
         state: present
 
-    - name: Add HashiCorp GPG key
+    - name: Import HashiCorp GPG key
       apt_key:
-        url: https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x91A6E7F85D05C65630BEF18951852D87348FFC4C
+        url: https://apt.releases.hashicorp.com/gpg
         state: present
     
     - name: Add HashiCorp repository
       apt_repository:
-        repo: "deb [arch=amd64] https://apt.releases.hashicorp.com {{ ansible_distribution_release }} main"
+        repo: "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com {{ ansible_distribution_release }} main"
         state: present
 
     - name: Update apt cache
