@@ -32,7 +32,7 @@ pipeline {
                         sh './ansible_ssh_configuration.sh'
                         withCredentials([string(credentialsId: 'vault-password', variable: 'VAULT_PASSWORD')]) {
                             def extraVars = [
-                                "vault-password": "@${VAULT_PASSWORD}"
+                                "vault_password": "@${VAULT_PASSWORD}"
                             ]
                             ansiblePlaybook(
                                 disableHostKeyChecking: true,
