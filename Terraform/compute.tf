@@ -120,9 +120,9 @@ resource "aws_instance" "application_host" {
 }
 
 output "bastion_public_ip" {
-  value = "aws_instance.bastion_host.public_ip"
+  value = aws_instance.bastion_host.public_ip
 }
 
 output "private_ec2_private_ip" {
-  value = "aws_instance.application_host.private_ip"
+  value = aws_instance.application_host.private_ip
 }
