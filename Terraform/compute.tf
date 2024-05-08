@@ -95,7 +95,7 @@ resource "aws_instance" "bastion_host" {
     EOF
 
     provisioner "local-exec" {
-        command = "echo ${self.public_ip} > inventory"
+        command = "echo ${self.public_ip} > ../ansible/inventory"
     }
 
     tags = {
