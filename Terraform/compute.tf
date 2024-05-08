@@ -28,16 +28,16 @@ resource "local_file" "private_key" {
   content  = tls_private_key.my_key_pair.private_key_pem
 }
 
+resource "local_file" "private_key" {
+  filename = "my_key.pem"
+  content  = tls_private_key.my_key_pair.private_key_pem
+}
+
 resource "null_resource" "move_private_key" {
   provisioner "local-exec" {
     command = "cat ${local_file.private_key.filename} > ~/.ssh/id_rsa"
   }
-
-  connection {
-    type = "local"
-  }
 }
-
 
 resource "aws_security_group" "bastion_SG" {
     vpc_id = module.my-vpc.my_vpc.id
