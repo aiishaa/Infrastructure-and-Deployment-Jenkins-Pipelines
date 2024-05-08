@@ -33,6 +33,7 @@ pipeline {
             steps {
                 script {
                     dir('ansible') {
+                        sh 'chmod +x ./ansible_ssh_configuration.ssh'
                         sh './ansible_ssh_configuration.sh'
                         withCredentials([string(credentialsId: 'vault-password', variable: 'VAULT_PASSWORD')]) {
                             ansiblePlaybook(
