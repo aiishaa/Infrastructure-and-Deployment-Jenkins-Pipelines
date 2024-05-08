@@ -33,6 +33,7 @@ pipeline {
             steps {
                 script {
                     dir('ansible') {
+                        sh './ansible_ssh_configuration.sh'
                         withCredentials([string(credentialsId: 'vault-password', variable: 'VAULT_PASSWORD')]) {
                             ansiblePlaybook(
                                 disableHostKeyChecking: true,
