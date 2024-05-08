@@ -37,7 +37,7 @@ pipeline {
                                 inventory: 'inventory',
                                 playbook: 'playbook.yml',
                                 extraVars: 
-                                {vault_password: "${VAULT_PASSWORD}"}
+                                    vault_password: "${VAULT_PASSWORD}"
                             )
                         }
                     }
