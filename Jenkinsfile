@@ -37,7 +37,7 @@ pipeline {
                                 installation: 'Ansible',
                                 inventory: 'inventory',
                                 playbook: 'playbook.yml',
-                                extraVars: extravars
+                                extraVars: extraVars
                             )
                         }
                     }
