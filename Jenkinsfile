@@ -33,15 +33,15 @@ pipeline {
             steps {
                 script {
                     dir('ansible') {
-                        sh 'chmod +x ./ansible_ssh_configuration.sh'
-                        sh './ansible_ssh_configuration.sh'
+                        chmod +x ./ansible_ssh_configuration.sh
+                        ./ansible_ssh_configuration.sh
                         withCredentials([string(credentialsId: 'vault-password', variable: 'VAULT_PASSWORD')]) {
                             ansiblePlaybook(
                                 disableHostKeyChecking: true,
                                 installation: 'Ansible',
                                 inventory: 'inventory',
                                 playbook: 'playbook.yml',
-                                extraVars: [vault_password: ${VAULT_PASSWORD}]
+                                extraVars: ["vault_password=${VAULT_PASSWORD}"] // Corrected
                             )
                         }
                     }
