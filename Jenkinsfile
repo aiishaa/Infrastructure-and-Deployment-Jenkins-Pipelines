@@ -17,7 +17,7 @@ pipeline {
                     ]) 
                     {
                         dir('Terraform') {
-                            sh "terraform adestroy -var-file ${environment}_variables.tfvars --auto-approve"
+                            sh "terraform destroy -var-file ${environment}_variables.tfvars --auto-approve"
                             // sh "terraform init -upgrade"
                             // sh "terraform workspace select ${environment}"
                             // sh "terraform apply -var-file ${environment}_variables.tfvars --auto-approve"
