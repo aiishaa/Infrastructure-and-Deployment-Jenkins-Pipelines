@@ -36,7 +36,7 @@ pipeline {
                                 installation: 'Ansible',
                                 inventory: 'inventory',
                                 playbook: 'playbook.yml',
-                                extraVars: ["vault_password=${VAULT_PASSWORD}"]
+                                extraVars: ["vault_password=@${VAULT_PASSWORD}"]
                             )
                         }
                     }
