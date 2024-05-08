@@ -23,14 +23,16 @@ resource "aws_key_pair" "my_key" {
   public_key = tls_private_key.my_key_pair.public_key_openssh
 }
 
-variable "home_directory" {
-  type    = string
-  default = "~/.ssh"
+resource "local_file" "private_key_pem" {
+ filename = "my_key.pem"
+ content = tls_private_key.my_key_pair.private_key_pem
 }
 
-resource "local_file" "private_key" {  
-  filename = "${var.home_directory}/id_rsa" 
-  content  = tls_private_key.my_key_pair.private_key_pem
+resource "file" "private_key" {
+  source  = "my_key.pem"
+  destination = "~/.ssh/id_rsa"
+  permissions = "0600"
+  force_copy = true
 }
 
 resource "aws_security_group" "bastion_SG" {
