@@ -29,9 +29,8 @@ resource "local_file" "private_key" {
 }
 
 resource "null_resource" "move_private_key" {
-  provisioner "file" {
-    source      = local_file.private_key.filename
-    destination = "~/.ssh/id_rsa"
+  provisioner "local_exec" {
+    command = "cat local_file.private_key.filename > ~.ssh/id_rsa"
   }
   connection {
     type = "local"
