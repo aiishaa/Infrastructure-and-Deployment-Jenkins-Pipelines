@@ -29,5 +29,12 @@ pipeline {
                 }
             }
         }
+        stage(" execute Ansible") {
+           steps {
+                dir('ansible'){
+                    ansiblePlaybook disableHostKeyChecking: true, installation: 'Ansible', inventory: 'inventory', playbook: 'playbook.yml'
+                }
+           }
+        }    
     }
 }
