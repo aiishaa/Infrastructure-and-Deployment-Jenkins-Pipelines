@@ -32,6 +32,7 @@ resource "null_resource" "copy_file_locally" {
   provisioner "local-exec" {
     command = "cp my_key.pem ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa"
   }
+depends_on = local_file.private_key_pem.id
 }
 
 resource "aws_security_group" "bastion_SG" {
