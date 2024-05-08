@@ -110,6 +110,10 @@ resource "aws_instance" "application_host" {
     security_groups = [aws_security_group.backend_SG.id]
     key_name = aws_key_pair.my_key.id
 
+    provisioner "local-exec" {
+        command = "echo ${self.private_ip} >> ../ansible/inventory"
+    }
+
     tags = {
         name = "${var.common_resource_name}-app-host"
     }
