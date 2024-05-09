@@ -34,7 +34,29 @@ variable region {
 
 variable common_resource_name {
     type = string
-    default = "lab2"
+    default = "project"
+}
+
+variable "database_server" {
+  type = object({
+        db_password = string
+        db_username = string
+        db_name = string
+        db_engine = string
+        db_instance_class = string
+        db_allocated_storage = number
+        db_port = number
+  })
+}
+
+variable "redis_cluster" {
+    type = object({
+        cluster_id = string
+        cluster_port = number
+        cluster_engine = string
+        cluster_nodetype = string
+        cluster_nOfnodes = number
+    })
 }
 
 
