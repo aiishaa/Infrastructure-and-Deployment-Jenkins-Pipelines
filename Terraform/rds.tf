@@ -22,7 +22,7 @@ resource "aws_db_instance" "rds-db" {
   allocated_storage    = var.database_server["db_allocated_storage"]
   db_name              = var.database_server["db_name"]
   engine               = var.database_server["db_engine"]
-  engine_version         = "8.0.35"
+  engine_version         = "5.7"
   instance_class       = var.database_server["db_instance_class"]
   username             = var.database_server["db_username"]
   password             = var.database_server["db_password"]
