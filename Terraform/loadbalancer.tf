@@ -24,7 +24,7 @@ resource "aws_security_group" "elb_sg" {
 resource "aws_elb" "public-elb" {
   name               = "public-terraform-elb"
   availability_zones = ["us-east-1a", "us-east-1b"]
-  vpc_id             = module.my-vpc.my_vpc.id
+  subnets            = ["module.my-vpc.public_subnet_1, "module.my-vpc.public_subnet_2"]
 
   listener {
     instance_port     = 3000
