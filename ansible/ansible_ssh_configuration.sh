@@ -1,7 +1,5 @@
 #!/bin/bash
 
-ips_file="inventory.txt"
-
 ssh_config="$HOME/.ssh/config"
 
 echo "
