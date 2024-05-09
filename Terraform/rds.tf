@@ -20,11 +20,11 @@ resource "aws_security_group" "rds-SG" {
 
 resource "aws_db_instance" "rds-db" {
   allocated_storage = 10
-  db_name              = "mydb"
-  engine               = "mysql"
-  instance_class       = "db.t3.micro"
-  username             = "aisha"
-  password             = "12345678"
+  db_name              = var.db_name
+  engine               = var.db_engine
+  instance_class       = var.db_instance_class
+  username             = var.db_password
+  password             = var.db_password
   skip_final_snapshot  = true
   vpc_security_group_ids = [aws_security_group.rds-SG.id]
   db_subnet_group_name = aws_db_subnet_group.my_db_subnet_group.name
