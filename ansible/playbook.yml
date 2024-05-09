@@ -70,26 +70,11 @@
         groups: docker
         append: yes
         
-    - name: Register Jenkins slave
-      jenkins_slave:
-        name: "ec2-private-agent"
-        remote_fs: "/home/jenkins"  
-        label: "ec2-peivate-agent"  
-        user: "{{ jenkins_slave_user }}"  
-        jnlp_url: "http://{{ jenkins_server_ip }}/jnlpJars/slave.jar"  
-        success_url: "http://{{ jenkins_server_ip }}/computer/{{ slave_name }}/discardOfflineNodes"
-        credentials_id: " {{ jenkins_server_secret }}"
-      delegate_to: localhost
-      register: slave_registration
+    - name: Download Jenkins Agent JAR
+      get_url:
+        url: "http://{{ jenkins_server_ip }}:{{ jenkins_server_port }}/jnlpJars/agent.jar"
+        dest: /home/jenkins/agent.jar
+        mode: 0755
 
-    - debug:
-        msg: "Slave '{{ slave_name }}' registration result: {{ slave_registration }}"
-    
-    # - name: Download Jenkins Agent JAR
-    #   get_url:
-    #     url: "http://{{ jenkins_server_ip }}:{{ jenkins_server_port }}/jnlpJars/agent.jar"
-    #     dest: /home/jenkins/agent.jar
-    #     mode: 0755
-
-    # - name: Start Jenkins Age > /dev/null 2>&1 &"
-    #   command: "java -jar /home/jenkins/agent.jar -jnlpUrl http://{{ jenkins_server_ip }}:{{ jenkins_server_port }} -name 'private-ec2-instance' -secret {{ jenkins_server_secret }} -workDir '/home/jenkins'"
+    - name: Start Jenkins Age
+      command: "java -jar /home/jenkins/agent.jar -jnlpUrl http://{{ jenkins_server_ip }}:{{ jenkins_server_port }} -name 'private-ec2-instance' -secret {{ jenkins_server_secret }} -workDir '/home/jenkins'"
