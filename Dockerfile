@@ -1,6 +1,6 @@
 FROM node:carbon
 WORKDIR /app
-COPY . ./nodeapp
+COPY . .
 RUN npm install
 EXPOSE 3000
-CMD [ "node", "./app.js" ]
+CMD [ "node", "nodeapp/app.js" ]
