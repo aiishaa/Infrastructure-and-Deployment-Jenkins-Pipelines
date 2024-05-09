@@ -10,6 +10,8 @@ const connection = mysql.createConnection({
   port: process.env.RDS_PORT
 });
 
+console.log(connection)
+
 connection.connect((err) => {
   if (err) {
     console.error('Database connection failed: ' + err.stack);
