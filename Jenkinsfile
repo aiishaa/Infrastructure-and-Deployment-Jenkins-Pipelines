@@ -17,7 +17,7 @@ pipeline {
                     ]) 
                     {
                         dir('Terraform') {
-                            withCredentials([file(credentialsID: '${environment}_variables.tfvars', variable: 'dev_vars']){
+                            withCredentials([file(credentialsID: '${environment}_variables.tfvars', variable: 'dev_vars')]){
                                 // sh "terraform destroy -var-file dev_vars --auto-approve"
                                 sh "terraform init -upgrade"
                                 sh "terraform workspace select ${environment}"
