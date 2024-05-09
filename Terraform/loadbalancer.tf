@@ -1,7 +1,30 @@
-# Create a new load balancer
+resource "aws_security_group" "elb_sg" {
+  name        = "elb-security-group"
+  vpc_id      = module.my-vpc.my_vpc.id
+
+  ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"] 
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1" 
+    cidr_blocks = ["0.0.0.0/0"] 
+  }
+
+  tags = {
+    Name = "elb-security-group"
+  }
+}
+
 resource "aws_elb" "public-elb" {
   name               = "public-terraform-elb"
   availability_zones = ["us-east-1a", "us-east-1b"]
+  vpc_id             = module.my-vpc.my_vpc.id
 
   listener {
     instance_port     = 3000
@@ -23,6 +46,8 @@ resource "aws_elb" "public-elb" {
   idle_timeout                = 400
   connection_draining         = true
   connection_draining_timeout = 400
+
+  security_groups = [aws_security_group.elb_sg.id]
 
   tags = {
     Name = "public-terraform-elb"
