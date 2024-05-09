@@ -1,5 +1,6 @@
 def buildImage(String imageName){
-    sh "docker build -t $imageName ."
+    withCredentials([file(credentialsId: 'docker_env_file', variable: 'ENV_FILE')])
+    sh "docker build -t $imageName --env-file $ENV_FILE ."
 }
 
 def dockerLogin(){
