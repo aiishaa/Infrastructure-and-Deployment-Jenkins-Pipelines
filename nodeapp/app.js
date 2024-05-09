@@ -1,28 +1,27 @@
-const express = require('express')
-var mysql = require('mysql');
-const app = express()
-const port = 3000
+const express = require('express');
+const mysql = require('mysql');
+const app = express();
+const port = 3000;
 
-var connection = mysql.createConnection({
-  host     : process.env.RDS_HOSTNAME,
-  user     : process.env.RDS_USERNAME,
-  password : process.env.RDS_PASSWORD,
-  port     : process.env.RDS_PORT
+const connection = mysql.createConnection({
+  host: process.env.RDS_HOSTNAME,
+  user: process.env.RDS_USERNAME,
+  password: process.env.RDS_PASSWORD,
+  port: process.env.RDS_PORT
 });
-app.get("/db", (req, res) => {
 
-connection.connect(function(err) {
+connection.connect((err) => {
   if (err) {
     console.error('Database connection failed: ' + err.stack);
-    res.send("db connection failed");
     return;
   }
-  res.send("db connection successful");
   console.log('Connected to database.');
-
-  connection.end();
 });
-})
+
+app.get("/db", (req, res) => {
+  // Handle requests here without attempting to connect to the database
+  res.send("db connection successful");
+});
 
 // const redis = require('redis');
 // const client = redis.createClient({
@@ -48,6 +47,6 @@ connection.connect(function(err) {
 //  }}) 
 //   })
   
-  // app.listen(port, () => {
-  //   console.log(`Example app listening at http://localhost:${port}`)
-  // })
+  app.listen(port, () => {
+    console.log(`Example app listening at http://localhost:${port}`)
+  })
