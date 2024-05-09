@@ -1,7 +1,10 @@
 pipeline {
     agent { label 'ec2-private-agent' }
+    environment {
+        IMAGE_NAME = 'aishafathy/nodeapp:latest'
+    }
     stages {
-        stage("init"){
+        stage("init") {
             steps {
                 script {
                     gv = load 'script.groovy'
@@ -11,16 +14,18 @@ pipeline {
         stage('build image') {
             steps {
                 script {
-                   echo 'building docker image...'
-                   gv.buildImage(env.IMAGE_NAME)
-                   gv.dockerLogin()
-                   gv.dockerPush(env.IMAGE_NAME)
+                    echo 'Building Docker image...'
+                    gv.buildImage(env.IMAGE_NAME)
+                    gv.dockerLogin()
+                    gv.dockerPush(env.IMAGE_NAME)
                 }
             }
         }
         stage('deploy') {
             steps {
-                gv.dockerRunContainer(env.IMAGE_NAME)
+                script {
+                    gv.dockerRunContainer(env.IMAGE_NAME)
+                }
             }
         }
     }
