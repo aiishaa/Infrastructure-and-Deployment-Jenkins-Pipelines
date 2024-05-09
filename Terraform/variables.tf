@@ -57,3 +57,4 @@ variable "redis_cluster" {
         cluster_nOfnodes = number
         cluster_port    = number
 })
+}
