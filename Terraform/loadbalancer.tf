@@ -36,7 +36,7 @@ resource "aws_elb" "public-elb" {
     healthy_threshold   = 2
     unhealthy_threshold = 2
     timeout             = 3
-    target              = "HTTP:3000/"
+    target              = "HTTP:3000/db"
     interval            = 30
   }
 
