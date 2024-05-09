@@ -13,15 +13,16 @@ app.get("/db", (req, res) => {
 
 connection.connect(function(err) {
   if (err) {
-	  res.send("db connection failed")
     console.error('Database connection failed: ' + err.stack);
+    res.send("db connection failed");
     return;
- }
-	res.send("db connection successful");
+  }
+  res.send("db connection successful");
   console.log('Connected to database.');
 
-connection.end();
-});})
+  connection.end();
+});
+})
 
 // const redis = require('redis');
 // const client = redis.createClient({
@@ -47,6 +48,6 @@ connection.end();
 //  }}) 
 //   })
   
-  app.listen(port, () => {
-    console.log(`Example app listening at http://localhost:${port}`)
-  })
+  // app.listen(port, () => {
+  //   console.log(`Example app listening at http://localhost:${port}`)
+  // })
