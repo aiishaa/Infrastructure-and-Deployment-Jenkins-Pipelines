@@ -49,14 +49,6 @@ variable "database_server" {
   })
 }
 
-variable "redis_cluster" {
-    type = object({
-        cluster_id = string
-        cluster_port = number
-        cluster_engine = string
-        cluster_nodetype = string
-        cluster_nOfnodes = number
-    })
-}
+
 
 
