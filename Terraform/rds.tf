@@ -19,7 +19,7 @@ resource "aws_security_group" "rds-SG" {
 }
 
 resource "aws_db_instance" "rds-db" {
-  allocated_storage = 10
+  allocated_storage    = var.db_allocated_storage
   db_name              = var.db_name
   engine               = var.db_engine
   instance_class       = var.db_instance_class
