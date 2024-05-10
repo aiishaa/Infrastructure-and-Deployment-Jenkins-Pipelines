@@ -60,6 +60,7 @@ dir('ansible') {
    - When you hit the load balancer on path /db you should get 'db connection successful', and on path /redis you should get 'redis is successfully connected' 
 
 
+
 ![rds-test](https://github.com/aiishaa/Jenkins-Task-ITI/assets/57088227/bcfc8145-9808-4312-bc59-dc1ab3f74569)
 
 
