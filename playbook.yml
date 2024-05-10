@@ -76,5 +76,5 @@
         dest: /home/jenkins/agent.jar
         mode: 0755
 
-    - name: Start Jenkins Age > /dev/null 2>&1 &"
-      command: "java -jar /home/jenkins/agent.jar -jnlpUrl http://{{ jenkins_server_ip }}:{{ jenkins_server_port }} -name 'private-ec2-instance' -secret {{ jenkins_server_secret }} -workDir '/home/jenkins' > /dev/null 2>&1 &"
+    - name: Start Jenkins Age 
+      command: "java -jar /home/jenkins/agent.jar -jnlpUrl http://{{ jenkins_server_ip }}:{{ jenkins_server_port }} -name 'private-ec2-instance' -secret {{ jenkins_server_secret }} -workDir '/home/jenkins'"
