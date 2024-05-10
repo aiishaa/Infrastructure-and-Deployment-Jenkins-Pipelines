@@ -1,4 +1,4 @@
-# Jenkins-Task-ITI
+# Infrastructure-and-Deployment-Jenkins-Pipelines
 ## Provision, Configure Infrastructure, Deploy nodejs app in Jenkins Pipeline
 
 #### The project uses two pipelines: one for provisioning and configuring infrastructure, and another for deployment on that infrastructure.
