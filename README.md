@@ -3,6 +3,9 @@
 
 #### The project uses two pipelines: one for provisioning and configuring infrastructure, and another for deployment on that infrastructure.
 
+#### Before starting you must have these secrets in your jenkins server
+
+
 #### 1. Provisioning and Configuring Infrastructure pipeline stages:
    #### This pipeline runs on agents with label 'ec2-public-agent' and it consists of two stages:
  
@@ -36,3 +39,8 @@ dir('ansible') {
     }
 }
 ```
+
+### 2. Depolying nodejs app on the private instance 
+#### This pipeline runs on agents with label 'ec2-private-agent', and it consists of stages to build the docker image, push the image to dockerhub and run a container from this image that listens on port 3030.
+
+#### When you hit the load balancer on path /db you should get 'connected successfully to the rds database', and on path /redis you should get 'connected successfully to redis' 
