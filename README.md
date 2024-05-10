@@ -5,12 +5,12 @@
 
 #### 1. Provisioning and Configuring Infrastructure pipeline stages:
 
-#### Before starting you must have these secrets in your jenkins server
-Note: Ansible vault contains variables of 
+      - Before starting you must have these secrets in your jenkins server
+      Note: Ansible vault contains variables of 
 
-      1. jenkins_server_ip
-      2. jenkins_server_port
-      3. jenkins_server_secret
+            1. jenkins_server_ip
+            2. jenkins_server_port
+            3. jenkins_server_secret
 
 ![secrets](https://github.com/aiishaa/Jenkins-Task-ITI/assets/57088227/3c827615-4728-4979-8281-8e1f26ae933c)
 
@@ -59,12 +59,11 @@ dir('ansible') {
 
    - When you hit the load balancer on path /db you should get 'db connection successful', and on path /redis you should get 'redis is successfully connected' 
 
-
-
+&nbsp;&nbsp;
 ![rds-test](https://github.com/aiishaa/Jenkins-Task-ITI/assets/57088227/bcfc8145-9808-4312-bc59-dc1ab3f74569)
-
-
-
+&nbsp;
+&nbsp;
+&nbsp;
 ![redis-connected](https://github.com/aiishaa/Jenkins-Task-ITI/assets/57088227/8547e5b6-e732-4e0a-8300-793663d831cf)
 
 
