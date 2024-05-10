@@ -3,6 +3,8 @@
 
 #### The project uses two pipelines: one for provisioning and configuring infrastructure, and another for deployment on that infrastructure.
 
+#### 1. Provisioning and Configuring Infrastructure pipeline stages:
+
 #### Before starting you must have these secrets in your jenkins server
       Note: Ansible vault contains variables of 
       1. jenkins_server_ip
@@ -11,8 +13,6 @@
 
 ![secrets](https://github.com/aiishaa/Jenkins-Task-ITI/assets/57088227/3c827615-4728-4979-8281-8e1f26ae933c)
 
-
-#### 1. Provisioning and Configuring Infrastructure pipeline stages:
    This pipeline runs on agents with label 'ec2-public-agent' and it consists of two stages:
  
    ## Stage 1: ## 
