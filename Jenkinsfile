@@ -17,12 +17,12 @@ pipeline {
                     ]) {
                         dir('Terraform') {
                             withCredentials([file(credentialsId: "${environment}_variables.tfvars", variable: 'VARS_VALUES')]) {    
-                                 sh "terraform destroy -var-file=${VARS_VALUES} --auto-approve"
-                                 // sh "terraform init -upgrade"
-                                 // sh "terraform workspace select ${environment}"
-                                 // sh "terraform apply -var-file=${VARS_VALUES} --auto-approve"
-                                 // EC2_PUBLIC_IP = sh(script: "terraform output bastion_public_ip", returnStdout: true).trim()
-                                 // EC2_PRIVATE_IP = sh(script: "terraform output private_ec2_private_ip", returnStdout: true).trim()
+                                 //sh "terraform destroy -var-file=${VARS_VALUES} --auto-approve"
+                                 sh "terraform init -upgrade"
+                                 sh "terraform workspace select ${environment}"
+                                 sh "terraform apply -var-file=${VARS_VALUES} --auto-approve"
+                                 EC2_PUBLIC_IP = sh(script: "terraform output bastion_public_ip", returnStdout: true).trim()
+                                 EC2_PRIVATE_IP = sh(script: "terraform output private_ec2_private_ip", returnStdout: true).trim()
                             }
                         }
                     }
