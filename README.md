@@ -5,12 +5,12 @@
 
 #### 1. Provisioning and Configuring Infrastructure pipeline stages:
 
-      - Before starting you must have these secrets in your jenkins server
-      Note: Ansible vault contains variables of 
+- Before starting you must have these secrets in your jenkins server
+  Note: Ansible vault contains variables of 
 
-            1. jenkins_server_ip
-            2. jenkins_server_port
-            3. jenkins_server_secret
+     1. jenkins_server_ip
+     2. jenkins_server_port
+     3. jenkins_server_secret
 
 ![secrets](https://github.com/aiishaa/Jenkins-Task-ITI/assets/57088227/3c827615-4728-4979-8281-8e1f26ae933c)
 
